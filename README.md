@@ -1,5 +1,7 @@
-# AdvancedNodeStarter
-Starting project for a course on Advanced Node @ Udemy
+# AdvancedNodeApp
+
+Advanced code for Nodejs applications using Express.  
+Author: [Francis Rodrigues](https://github.com/francisrod01)
 
 ### Setup environment
 
@@ -44,3 +46,14 @@ app.get('/api/blogs', requireLogin, async (req, res) => {
   client.set(req.user.id, JSON.stringify(blogs));
 });
 ```
+
+### Sources to learn more
+
+- Starting project for a course on Advanced Node - [@Udemy][1]
+
+### License
+
+MIT
+
+
+[1]: https://github.com/StephenGrider/AdvancedNodeStarter
