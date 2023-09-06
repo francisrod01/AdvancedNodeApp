@@ -9,7 +9,11 @@
     "client": "npm run start --prefix client",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
     "build": "NPM_CONFIG_PRODUCTION=false npm install --legacy-peer-deps --prefix client && npm run build --prefix client",
-    "heroku-postbuild": "npm run build"
+    "heroku-postbuild": "npm run build",
+    "@kill-comment": "Kill a process running in a specific port: PORT=3000 npm run kill",
+    "kill": "kill $(lsof -t -i:$PORT) && echo '> KILLED!' || echo '> The port was already dead'",
+    "@test-comment": "It will run: jest --env=node --colors --coverage test --runInBand --detectOpenHandles --forceExit",
+    "test": "jest"
   },
   "author": "",
   "license": "ISC",
@@ -18,7 +22,6 @@
     "body-parser": "^1.20.2",
     "concurrently": "^8.2.1",
     "cookie-session": "^2.0.0",
-    "cors": "^2.8.5",
     "express": "^4.18.2",
     "migrate-mongoose": "^4.0.0",
     "mongoose": "5.10.11",
