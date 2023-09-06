@@ -1,24 +1,19 @@
-const puppeteer = require("puppeteer");
-const sessionFactory = require('./factories/sessionFactory');
-const userFactory = require('./factories/userFactory');
+const Page = require('./helpers/page');
 
-let browser, page;
+let page;
 
 beforeEach(async () => {
-  browser = await puppeteer.launch({
-    headless: false
-  });
-  page = await browser.newPage();
+  page = await Page.build();
   await page.goto("http://localhost:3000");
 });
 
 afterEach(async () => {
-  await browser.close();
+  await page.close();
 });
 
 
 test("We can launch a browser", async () => {
-  const text = await page.$eval("a.brand-logo", (el) => el.innerHTML);
+  const text = await page.getContentsOf("a.brand-logo");
 
   expect(text).toEqual("Blogster");
 });
@@ -32,14 +27,8 @@ test("clicking Log in starts OAuth flow", async () => {
 });
 
 test("When signed in, shows logout button", async () => {
-  const user = await userFactory();
-  const { session, sig } = sessionFactory(user);
+  await page.login();
 
-  await page.setCookie({ name: 'session', value: session });
-  await page.setCookie({ name: 'session.sig', value: sig });
-  await page.goto('http://localhost:3000');
-  await page.waitForSelector('a[href="/auth/logout"]');
-
-  const logoutText = await page.$eval('a[href="/auth/logout"]', el => el.innerHTML);
-  expect(logoutText).toEqual('Logout');
+  const text = await page.getContentsOf('a[href="/auth/logout"]');
+  expect(text).toEqual('Logout');
 });
