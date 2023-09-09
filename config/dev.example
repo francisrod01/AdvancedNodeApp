@@ -1,0 +1,8 @@
+module.exports = {
+  googleClientID:
+    '<CLIENT_ID>.apps.googleusercontent.com',
+  googleClientSecret: '<CLIENT_SECRET>',
+  mongoURI:
+    'mongodb+srv://<USER>:<PASS>@cluster0.CLUSTER>.mongodb.net/advnode?retryWrites=true&w=majority',
+  cookieKey: '<YOUR_COOKIE_KEY>',
+};
