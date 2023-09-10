@@ -42,6 +42,19 @@ class CustomPage {
   async getContentsOf(selector) {
     return this.page.$eval(selector, el => el.innerHTML);
   }
+
+  get(path) {
+    return this.page.evaluate(async (_path) => {
+      const res = await fetch(_path, {
+        method: 'GET',
+        credentials: 'same-origin',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+      return await res.json();
+    }, path);
+  }
 }
 
 module.exports = CustomPage;
