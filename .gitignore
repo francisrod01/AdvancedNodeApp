@@ -134,3 +134,7 @@ package-lock.json
 
 # DEV config files
 config/dev.js
+config/ci.js
+
+#IDEs
+.vscode
