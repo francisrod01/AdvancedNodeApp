@@ -55,6 +55,20 @@ class CustomPage {
       return await res.json();
     }, path);
   }
+
+  post(path, data) {
+    return this.page.evaluate(async (_path, _data) => {
+      const res = await fetch(_path, {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(_data)
+      });
+      return await res.json();
+    }, path, data);
+  }
 }
 
 module.exports = CustomPage;
