@@ -1,17 +1,18 @@
 const Page = require('./helpers/page');
 
 let page;
+const baseUrl = 'http://localhost:3000';
 
 beforeEach(async () => {
   page = await Page.build();
-  await page.goto('http://localhost:3000');
+  await page.goto(baseUrl);
 });
 
 afterEach(async () => {
   await page.close();
 });
 
-describe('When logged in', async () => {
+describe('When logged in', () => {
   beforeEach(async () => {
     await page.login();
     await page.click('a.btn-floating');
@@ -26,7 +27,7 @@ describe('When logged in', async () => {
     expect(label).toEqual('Blog Title');
   });
 
-  describe('And using valid inputs', async () => {
+  describe('And using valid inputs', () => {
     beforeEach(async () => {
       await page.type('.title input', 'My title..');
       await page.type('.content input', 'My content..');
@@ -41,7 +42,7 @@ describe('When logged in', async () => {
 
     test('Submitting then saving adds blog to index page', async () => {
       await page.click('button.green');
-      await page.waitForm('.card');
+      await page.waitFor('.card');
 
       const title = await page.getContentsOf('.card-title');
       const content = await page.getContentsOf('p');
@@ -51,7 +52,7 @@ describe('When logged in', async () => {
     });
   });
 
-  describe('And using invalid inputs', async () => {
+  describe('And using invalid inputs', () => {
     beforeEach(async () => {
       await page.click('form button');
     });
@@ -67,14 +68,14 @@ describe('When logged in', async () => {
 });
 
 
-describe('User is not logged in', async () => {
+describe('User is not logged in', () => {
   const actions = [
     {
-      method: 'GET',
+      action: 'get',
       path: '/api/blogs'
     },
     {
-      method: 'POST',
+      action: 'post',
       path: '/api/blogs',
       data: {
         title: 'My title..',

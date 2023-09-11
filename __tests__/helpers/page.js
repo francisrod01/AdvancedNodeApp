@@ -1,11 +1,12 @@
 const puppeteer = require('puppeteer');
 const userFactory = require('../factories/userFactory');
 const sessionFactory = require('../factories/sessionFactory');
+const baseUrl = 'http://localhost:3000';
 
 class CustomPage {
   static async build() {
     const browser = await puppeteer.launch({
-      headless: 'new',
+      headless: true,
       args: ['--no-sandbox']
     });
 
@@ -35,12 +36,12 @@ class CustomPage {
     await this.page.setCookie({ name: 'session', value: session });
     await this.page.setCookie({ name: 'session.sig', value: sig });
     // await this.page.goto('http://localhost:3000', {"waitUntil" : "networkidle0"});
-    await this.page.goto('http://localhost:3000/blogs');
+    await this.page.goto(`${baseUrl}/blogs`);
     await this.page.waitForSelector('a[href="/auth/logout"]');
   }
 
   async getContentsOf(selector) {
-    return this.page.$eval(selector, el => el.innerHTML);
+    return await this.page.$eval(selector, (el) => el.innerHTML);
   }
 
   get(path) {
@@ -72,8 +73,8 @@ class CustomPage {
 
   execRequests(actions) {
     return Promise.all(
-      actions.map(({ method, path, data }) => {
-        return this[method](path, data);
+      actions.map(({ action, path, data }) => {
+        return this[action](path, data);
       })
     );
   }
