@@ -1,5 +1,5 @@
 const AWS = require('aws-sdk');
-const uuid = require('uuid/v5');
+const { v1: uuidv1 } = require('uuid');
 const keys = require('../config/keys');
 const requireLogin = require('../middlewares/requireLogin');
 
@@ -13,7 +13,7 @@ const s3 = new AWS.S3({
 
 module.exports = app => {
   app.get('/api/upload', requireLogin, (req, res) => {
-    const _key = `${req.user.id}/${uuid()}.jpeg`;
+    const _key = `${req.user.id}/${uuidv1()}.jpeg`;
 
     s3.getSignedUrl('putObject', {
       Bucket: 'my-blog-bucket-123',
