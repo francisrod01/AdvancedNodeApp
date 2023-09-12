@@ -6,4 +6,6 @@ module.exports = {
     'mongodb+srv://<USER>:<PASS>@cluster0.CLUSTER>.mongodb.net/advnode?retryWrites=true&w=majority',
   cookieKey: '<YOUR_COOKIE_KEY>',
   redisUrl: '<YOUR_REDIS_URL>',
+  s3AccessKeyId: '<YOUR_S3_ACCESS_KEY_ID>',
+  s3SecretAccessKey: '<YOUR_S3_SECRET_ACCESS_KEY>',
 };
